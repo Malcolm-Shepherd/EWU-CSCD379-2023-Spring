@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Wordle.Api.Data;
 using Wordle.Api.Services;
+//using Wordle.Api.Services;
 
 var MyAllowAllOrigins = "_myAllowAllOrigins";
 
@@ -31,8 +32,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
-builder.Services.AddScoped<WordService>();
-builder.Services.AddScoped<LeaderboardService>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<ClipService>();
 
 var app = builder.Build();
 
@@ -40,8 +41,10 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
-    Word.SeedWords(db);
-    Player.SeedPlayers(db);
+    User.SeedUsers(db);
+    Clip.SeeClips(db);
+/*    Word.SeedWords(db);
+    Player.SeedPlayers(db);*/
 }
 
 
